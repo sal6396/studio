@@ -107,7 +107,7 @@ export type Project = {
   technologies: string[];
   clientTestimonial?: string;
   clientName?: string;
-  isPublished?: boolean; // Added isPublished field
+  isPublished?: boolean;
 };
 
 export const PORTFOLIO_DATA: Project[] = [
@@ -143,7 +143,7 @@ export const PORTFOLIO_DATA: Project[] = [
     technologies: ['Figma', 'Adobe XD'],
     clientTestimonial: 'The new design is intuitive and has received rave reviews from our users.',
     clientName: 'Tech Solutions Ltd.',
-    isPublished: false, // This project will be hidden by default on public site
+    isPublished: false,
   },
    {
     id: 'project-4',
@@ -261,14 +261,30 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
   },
 ];
 
+export type TeamMember = {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  avatarUrl?: string;
+  avatarHint?: string;
+};
+
+export const TEAM_MEMBERS_DATA: TeamMember[] = [
+  { id: "tm_001", name: "Alice Wonderland", email: "alice.w@example.com", role: "Administrator", avatarUrl: "https://placehold.co/100x100.png", avatarHint: "woman smiling" },
+  { id: "tm_002", name: "Bob The Builder", email: "bob.b@example.com", role: "Editor", avatarUrl: "https://placehold.co/100x100.png", avatarHint: "man with glasses" },
+  { id: "tm_003", name: "Charlie Brown", email: "charlie.b@example.com", role: "Content Manager", avatarUrl: "https://placehold.co/100x100.png", avatarHint: "man professional" },
+  { id: "tm_004", name: "Diana Prince", email: "diana.p@example.com", role: "Support Staff", avatarUrl: "https://placehold.co/100x100.png", avatarHint: "woman corporate" },
+];
+
+
 export const CONTACT_DETAILS = {
   address: "123 Tech Park, Silicon Valley, CA 94000",
   phone: "+918968698818",
   email: "info@alifinfotech.com",
-  whatsapp: "+918968698818" // international format without '+' or '00' for wa.me link
+  whatsapp: "+918968698818" 
 };
 
-// Lucide Icons
 export const Icons = {
   home: Globe,
   about: Users,
@@ -289,7 +305,7 @@ export const Icons = {
   generic: Component,
   settings: Settings,
   dashboard: LayoutDashboard,
-  products: ShoppingBag, // Example, can be changed
-  orders: FileText, // Example, can be changed
-  analytics: BarChart3, // Example, can be changed
+  products: ShoppingBag, 
+  orders: FileText, 
+  analytics: BarChart3, 
 };

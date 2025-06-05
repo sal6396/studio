@@ -1,6 +1,6 @@
 
 import type { LucideIcon } from 'lucide-react';
-import { Smartphone, Globe, Palette, Settings2, Megaphone, Award, Users, LayoutGrid, Newspaper, Mail, MapPin, Phone, MessageCircle, CheckCircle2, Briefcase, Component, Settings, LayoutDashboard, ShoppingBag, FileText, BarChart3 } from 'lucide-react';
+import { Smartphone, Globe, Palette, Settings2, Megaphone, Award, Users, LayoutGrid, Newspaper, Mail, MapPin, Phone, MessageCircle, CheckCircle2, Briefcase, Component, Settings, LayoutDashboard, ShoppingBag, FileText, BarChart3, Building } from 'lucide-react';
 
 export const APP_NAME = "Alif Solutions Hub";
 export const COMPANY_NAME = "Alif InfoTech Solutions";
@@ -27,7 +27,7 @@ export const ADMIN_NAV_LINKS: NavLink[] = [
   { href: '/admin/portfolio', label: 'Portfolio', icon: LayoutGrid },
   { href: '/admin/blog', label: 'Blog', icon: Newspaper },
   { href: '/admin/inquiries', label: 'Inquiries', icon: Mail },
-  { href: '/admin/jobs', label: 'Job Applications', icon: Award },
+  { href: '/admin/jobs', label: 'Job Listings', icon: Award }, // Changed from Job Applications
   { href: '/admin/team', label: 'Team', icon: Users },
   { href: '/admin/settings', label: 'Settings', icon: Settings },
 ];
@@ -107,7 +107,7 @@ export type Project = {
   technologies: string[];
   clientTestimonial?: string;
   clientName?: string;
-  isPublished?: boolean;
+  isPublished?: boolean; // Added this field
 };
 
 export const PORTFOLIO_DATA: Project[] = [
@@ -143,7 +143,7 @@ export const PORTFOLIO_DATA: Project[] = [
     technologies: ['Figma', 'Adobe XD'],
     clientTestimonial: 'The new design is intuitive and has received rave reviews from our users.',
     clientName: 'Tech Solutions Ltd.',
-    isPublished: false,
+    isPublished: false, // Example of an unpublished project
   },
    {
     id: 'project-4',
@@ -308,4 +308,6 @@ export const Icons = {
   products: ShoppingBag, 
   orders: FileText, 
   analytics: BarChart3, 
+  company: Building, // Added for settings page
 };
+

@@ -1,3 +1,4 @@
+
 import { COMPANY_NAME, CONTACT_DETAILS, Icons } from '@/lib/constants';
 import { ContactForm } from '@/components/forms/ContactForm';
 import { InquiryForm } from '@/components/forms/InquiryForm';
@@ -80,15 +81,15 @@ export default function ContactPage() {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Our Location</h2>
           <div className="aspect-w-16 aspect-h-9 rounded-lg shadow-xl overflow-hidden">
-            {/* Replace with actual Google Maps embed in a real application */}
-            <Image
-              src="https://placehold.co/1200x600.png"
-              alt="Office Location Map"
-              width={1200}
-              height={600}
-              className="w-full h-full object-cover"
-              data-ai-hint="office map"
-            />
+            <iframe
+              className="w-full h-full"
+              style={{ border: 0 }}
+              loading="lazy"
+              allowFullScreen
+              referrerPolicy="no-referrer-when-downgrade"
+              src={`https://maps.google.com/maps?q=${encodeURIComponent(CONTACT_DETAILS.address)}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+              title="Office Location Map"
+            ></iframe>
           </div>
         </div>
       </section>

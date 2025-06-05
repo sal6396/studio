@@ -1,3 +1,4 @@
+
 import type { LucideIcon } from 'lucide-react';
 import { Smartphone, Globe, Palette, Settings2, Megaphone, Award, Users, LayoutGrid, Newspaper, Mail, MapPin, Phone, MessageCircle, CheckCircle2, Briefcase, Component, Settings, LayoutDashboard, ShoppingBag, FileText, BarChart3 } from 'lucide-react';
 
@@ -287,5 +288,3 @@ export const Icons = {
   orders: FileText, // Example, can be changed
   analytics: BarChart3, // Example, can be changed
 };
-
-```

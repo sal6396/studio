@@ -1,4 +1,4 @@
-// This file is intentionally left with only comments to resolve a routing conflict.
-// It was previously part of an admin dashboard implementation that has been reverted.
-// If issues persist with the /admin route, consider manually deleting the /src/app/admin/ directory.
-// The pre-existing admin files are located at /src/app/(main)/admin/ which were already placeholders.
+// This file is intentionally left blank as part of reverting admin dashboard changes.
+// If the "parallel pages" error for /admin persists,
+// you MUST MANUALLY DELETE the entire /src/app/admin/ directory
+// from your project to resolve the conflict.

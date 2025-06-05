@@ -3,7 +3,9 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { AdminSettingsForm } from "@/components/forms/AdminSettingsForm";
-import { Building, SearchCode } from "lucide-react"; // Changed SearchCog to SearchCode
+import { Building, SearchCode, Palette, Settings2 as IntegrationIcon } from "lucide-react"; // Renamed Settings2
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export default function AdminSettingsPage() {
   return (
@@ -26,7 +28,7 @@ export default function AdminSettingsPage() {
       <Card className="shadow-lg">
         <CardHeader>
           <div className="flex items-center gap-3">
-            <SearchCode className="h-6 w-6 text-primary" /> {/* Changed SearchCog to SearchCode */}
+            <SearchCode className="h-6 w-6 text-primary" />
             <CardTitle className="text-2xl">Basic SEO Settings</CardTitle>
           </div>
           <CardDescription>Set default SEO metadata for your site. These can often be overridden by page-specific settings.</CardDescription>
@@ -36,21 +38,46 @@ export default function AdminSettingsPage() {
         </CardContent>
       </Card>
 
-      {/* Placeholder for other settings sections */}
       <Card className="shadow-md">
         <CardHeader>
-          <CardTitle>Appearance Settings</CardTitle>
+          <div className="flex items-center gap-3">
+            <Palette className="h-6 w-6 text-primary" />
+            <CardTitle className="text-2xl">Appearance Settings</CardTitle>
+          </div>
+           <CardDescription>Manage the visual aspects of your site.</CardDescription>
         </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">Placeholder for theme and appearance settings (e.g., color schemes, logo upload).</p>
+        <CardContent className="space-y-6">
+          <div className="space-y-2">
+            <Label htmlFor="logoUpload">Logo Upload</Label>
+            <Input id="logoUpload" type="file" disabled />
+            <p className="text-sm text-muted-foreground">Upload your company logo (e.g., PNG, SVG). Feature coming soon.</p>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="themeColor">Primary Theme Color</Label>
+            <Input id="themeColor" type="text" placeholder="#3066BE" disabled />
+            <p className="text-sm text-muted-foreground">Enter a HEX code for the primary theme color. Feature coming soon.</p>
+          </div>
         </CardContent>
       </Card>
        <Card className="shadow-md">
         <CardHeader>
-          <CardTitle>Integration Settings</CardTitle>
+           <div className="flex items-center gap-3">
+            <IntegrationIcon className="h-6 w-6 text-primary" />
+            <CardTitle className="text-2xl">Integration Settings</CardTitle>
+          </div>
+          <CardDescription>Configure third-party service integrations.</CardDescription>
         </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">Placeholder for third-party integrations (e.g., Analytics, Email Marketing).</p>
+        <CardContent className="space-y-6">
+          <div className="space-y-2">
+            <Label htmlFor="gaId">Google Analytics ID</Label>
+            <Input id="gaId" type="text" placeholder="UA-XXXXXXXXX-X" disabled />
+            <p className="text-sm text-muted-foreground">Enter your Google Analytics Tracking ID. Feature coming soon.</p>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="mailchimpApiKey">Mailchimp API Key</Label>
+            <Input id="mailchimpApiKey" type="text" placeholder="your_api_key-usXX" disabled />
+            <p className="text-sm text-muted-foreground">Enter your Mailchimp API Key for newsletter integration. Feature coming soon.</p>
+          </div>
         </CardContent>
       </Card>
     </div>

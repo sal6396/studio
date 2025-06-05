@@ -1,15 +1,18 @@
 
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Switch } from "@/components/ui/switch";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { SERVICES_DATA, type Service } from "@/lib/constants";
+import { SERVICES_DATA, type Service } from "@/lib/constants"; // Ensure Service type is exported if not already
 import { MoreHorizontal, Pencil, PlusCircle, Trash2, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 
 export default function AdminServicesPage() {
   // In a real app, this data would come from a database and be mutable.
+  // For demonstration, we assume the Service type from constants.ts is usable.
+  // If Service type isn't directly usable due to Icon component, we might need a modified type here or fetch data differently.
   const services: Service[] = SERVICES_DATA;
 
   return (
@@ -17,7 +20,7 @@ export default function AdminServicesPage() {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <h1 className="text-3xl font-bold text-primary">Manage Services</h1>
         <Button asChild>
-          <Link href="/admin/services/new"> {/* Placeholder for new service page */}
+          <Link href="/admin/services/new">
             <PlusCircle className="mr-2 h-5 w-5" />
             Add New Service
           </Link>
@@ -82,7 +85,7 @@ export default function AdminServicesPage() {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
                               <DropdownMenuItem asChild>
-                                <Link href={`/admin/services/edit/${service.slug}`} className="flex items-center cursor-pointer">
+                                <Link href={`/admin/services/edit/${service.slug}`} className="flex items-center cursor-pointer"> {/* Placeholder edit link */}
                                   <Pencil className="mr-2 h-4 w-4" />
                                   Edit
                                 </Link>

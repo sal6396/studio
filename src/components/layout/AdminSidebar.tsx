@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { ADMIN_NAV_LINKS, APP_NAME, Icons } from "@/lib/constants";
-import { LogOut, PanelLeft } from "lucide-react";
+import { LogOut } from "lucide-react";
 import {
   Sidebar,
   SidebarProvider,
@@ -19,6 +19,7 @@ import {
   SidebarMenuButton,
   SidebarFooter,
 } from "@/components/ui/sidebar";
+import { ThemeToggle } from "@/components/admin/ThemeToggle";
 
 
 export default function AdminSidebar() {
@@ -64,10 +65,13 @@ export default function AdminSidebar() {
           </SidebarContent>
         </ScrollArea>
         <SidebarFooter className="p-4 border-t">
-          <Button variant="outline" className="w-full justify-start text-base h-12">
-            <LogOut className="mr-3 h-5 w-5" />
-            Logout
-          </Button>
+          <div className="flex items-center justify-between w-full">
+            <Button variant="outline" className="flex-grow justify-start text-base h-12 mr-2">
+              <LogOut className="mr-3 h-5 w-5" />
+              Logout
+            </Button>
+            <ThemeToggle />
+          </div>
         </SidebarFooter>
       </Sidebar>
     </SidebarProvider>

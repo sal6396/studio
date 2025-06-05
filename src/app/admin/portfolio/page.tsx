@@ -10,21 +10,18 @@ import { PORTFOLIO_DATA, type Project } from "@/lib/constants";
 import { MoreHorizontal, Pencil, PlusCircle, Trash2, Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react"; // Added useState and useEffect
+import { useState, useEffect } from "react"; 
 
 export default function AdminPortfolioPage() {
   const projects: Project[] = PORTFOLIO_DATA;
   
-  // State to manage the publish status of each project
   const [projectPublishStates, setProjectPublishStates] = useState<Record<string, boolean>>({});
 
-  // Initialize publish states when component mounts or projects data changes
   useEffect(() => {
     const initialStates: Record<string, boolean> = {};
     projects.forEach(project => {
-      // Default all projects to published if no status is stored
-      // In a real app, this would come from project.isPublished or similar
-      initialStates[project.id] = true; 
+      // Initialize from project.isPublished, default to true if undefined
+      initialStates[project.id] = project.isPublished === undefined ? true : project.isPublished;
     });
     setProjectPublishStates(initialStates);
   }, [projects]);
@@ -35,7 +32,7 @@ export default function AdminPortfolioPage() {
       [projectId]: checked,
     }));
     // In a real app, you would also make an API call here to update the backend
-    console.log(`Project ${projectId} publish status changed to: ${checked}`);
+    console.log(`Project ${projectId} local admin publish status changed to: ${checked}. This does NOT save to constants.ts yet.`);
   };
 
   return (
@@ -53,7 +50,7 @@ export default function AdminPortfolioPage() {
       <Card className="shadow-xl">
         <CardHeader>
           <CardTitle>Projects List</CardTitle>
-          <CardDescription>View, edit, or add new projects to your portfolio.</CardDescription>
+          <CardDescription>View, edit, or add new projects to your portfolio. Published status controls visibility on the main site.</CardDescription>
         </CardHeader>
         <CardContent>
           {projects.length > 0 ? (
@@ -71,7 +68,7 @@ export default function AdminPortfolioPage() {
                 </TableHeader>
                 <TableBody>
                   {projects.map((project) => {
-                    const isPublished = projectPublishStates[project.id] ?? true; // Default to true if not found
+                    const isPublished = projectPublishStates[project.id];
                     return (
                       <TableRow key={project.id}>
                         <TableCell className="hidden sm:table-cell">

@@ -107,6 +107,7 @@ export type Project = {
   technologies: string[];
   clientTestimonial?: string;
   clientName?: string;
+  isPublished?: boolean; // Added isPublished field
 };
 
 export const PORTFOLIO_DATA: Project[] = [
@@ -119,7 +120,8 @@ export const PORTFOLIO_DATA: Project[] = [
     imageHint: 'ecommerce website',
     technologies: ['React', 'Node.js', 'MongoDB', 'Stripe'],
     clientTestimonial: 'Alif InfoTech delivered an outstanding platform that significantly boosted our online sales.',
-    clientName: 'Retail Inc.'
+    clientName: 'Retail Inc.',
+    isPublished: true,
   },
   {
     id: 'project-2',
@@ -129,17 +131,19 @@ export const PORTFOLIO_DATA: Project[] = [
     imageUrl: 'https://placehold.co/600x400.png',
     imageHint: 'mobile health app',
     technologies: ['Swift', 'Kotlin', 'Firebase'],
+    isPublished: true,
   },
   {
     id: 'project-3',
-    title: 'SaaS Dashboard UI/UX',
+    title: 'SaaS Dashboard UI/UX (Draft)',
     category: 'UI/UX Design',
-    description: 'Redesigned a complex SaaS dashboard for improved usability and modern aesthetics.',
+    description: 'Redesigned a complex SaaS dashboard for improved usability and modern aesthetics. Currently in draft.',
     imageUrl: 'https://placehold.co/600x400.png',
     imageHint: 'saas dashboard',
     technologies: ['Figma', 'Adobe XD'],
     clientTestimonial: 'The new design is intuitive and has received rave reviews from our users.',
-    clientName: 'Tech Solutions Ltd.'
+    clientName: 'Tech Solutions Ltd.',
+    isPublished: false, // This project will be hidden by default on public site
   },
    {
     id: 'project-4',
@@ -149,6 +153,7 @@ export const PORTFOLIO_DATA: Project[] = [
     imageUrl: 'https://placehold.co/600x400.png',
     imageHint: 'logistics system',
     technologies: ['Java', 'Spring Boot', 'AWS'],
+    isPublished: true,
   },
 ];
 

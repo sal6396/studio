@@ -1,3 +1,4 @@
+
 import { PORTFOLIO_DATA, COMPANY_NAME, TESTIMONIALS_DATA } from '@/lib/constants';
 import { ProjectCard } from '@/components/cards/ProjectCard';
 import { TestimonialCard } from '@/components/cards/TestimonialCard';
@@ -11,6 +12,9 @@ export const metadata: Metadata = {
 };
 
 export default function PortfolioPage() {
+  const publishedProjects = PORTFOLIO_DATA.filter(project => project.isPublished !== false);
+  const publishedTestimonials = TESTIMONIALS_DATA; // Assuming all testimonials are suitable for public display for now
+
   return (
     <div className="bg-background text-foreground">
       {/* Hero Section */}
@@ -32,16 +36,20 @@ export default function PortfolioPage() {
               We've helped businesses of all sizes achieve their digital goals. Here are some of our success stories.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {PORTFOLIO_DATA.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-          </div>
+          {publishedProjects.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {publishedProjects.map((project) => (
+                <ProjectCard key={project.id} project={project} />
+              ))}
+            </div>
+          ) : (
+             <p className="text-center text-muted-foreground text-xl">No published projects yet. Check back soon!</p>
+          )}
         </div>
       </section>
       
       {/* Individual Project Details (Conceptual - for anchor linking) */}
-      {PORTFOLIO_DATA.map(project => (
+      {publishedProjects.map(project => (
         <section key={`detail-${project.id}`} id={project.id} className="py-12 bg-secondary/30 scroll-mt-20">
           <div className="container mx-auto px-4">
             <div className="bg-card p-8 rounded-lg shadow-xl">
@@ -84,21 +92,23 @@ export default function PortfolioPage() {
 
 
       {/* Testimonials Section */}
-      <section className="py-16 md:py-24 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Client Testimonials</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Hear what our satisfied clients have to say about their experience working with us.
-            </p>
+      {publishedTestimonials.length > 0 && (
+        <section className="py-16 md:py-24 bg-background">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Client Testimonials</h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Hear what our satisfied clients have to say about their experience working with us.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {publishedTestimonials.map((testimonial) => (
+                <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+              ))}
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {TESTIMONIALS_DATA.map((testimonial) => (
-              <TestimonialCard key={testimonial.id} testimonial={testimonial} />
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
     </div>
   );
 }

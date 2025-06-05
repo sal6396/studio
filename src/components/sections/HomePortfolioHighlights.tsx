@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { PORTFOLIO_DATA } from '@/lib/constants';
@@ -5,7 +6,11 @@ import { ProjectCard } from '@/components/cards/ProjectCard';
 import { ArrowRight } from 'lucide-react';
 
 export function HomePortfolioHighlights() {
-  const highlightedProjects = PORTFOLIO_DATA.slice(0, 3); // Show first 3 projects
+  const highlightedProjects = PORTFOLIO_DATA.filter(project => project.isPublished !== false).slice(0, 3); // Show first 3 published projects
+
+  if (highlightedProjects.length === 0) {
+    return null; // Or render a placeholder if no projects are published
+  }
 
   return (
     <section className="py-16 md:py-24 bg-background">

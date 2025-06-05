@@ -1,4 +1,3 @@
-// This file is intentionally left blank as part of reverting admin dashboard changes.
-// If the "parallel pages" error for /admin persists,
-// you MUST MANUALLY DELETE the entire /src/app/admin/ directory
-// from your project to resolve the conflict.
+// This file is intentionally left blank to remove the admin layout functionality
+// and help resolve any "parallel pages" error.
+// If the error persists, you may need to manually delete this /src/app/admin/ directory.

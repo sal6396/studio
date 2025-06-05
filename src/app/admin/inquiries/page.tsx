@@ -1,4 +1,6 @@
 
+"use client";
+
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Mail, Search, Filter } from "lucide-react";
 import { Input } from "@/components/ui/input";

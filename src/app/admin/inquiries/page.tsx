@@ -2,12 +2,21 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Mail, Search, Filter } from "lucide-react";
+import { Mail, Search, Filter as FilterIcon } from "lucide-react"; // Renamed Filter to FilterIcon to avoid conflict
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,23 +35,25 @@ interface Inquiry {
   email: string;
   subject: string;
   date: string;
-  status: "New" | "Read" | "Archived" | string; // Allow string for flexibility if statuses change
-  type: string;
-  // Add message if you plan to include it in sample data or fetch it
-  // message?: string; 
+  status: "New" | "Read" | "Archived"; // Stricter status types
+  type: "General Contact" | "Service Inquiry"; // Stricter type types
+  message?: string; // Added full message field
 }
 
 // Sample inquiry data - in a real app, this would come from a database
-const sampleInquiries: Inquiry[] = [
-  { id: "inq_001", name: "John Doe", email: "john.doe@example.com", subject: "Service Question", date: "2024-07-28", status: "New", type: "General Contact" },
-  { id: "inq_002", name: "Jane Smith", email: "jane.smith@example.com", subject: "Quote for Web Dev", date: "2024-07-27", status: "Read", type: "Service Inquiry" },
-  { id: "inq_003", name: "Bob Johnson", email: "bob.johnson@example.com", subject: "Partnership Opportunity", date: "2024-07-26", status: "Archived", type: "General Contact" },
-  { id: "inq_004", name: "Alice Brown", email: "alice.brown@example.com", subject: "Mobile App Idea", date: "2024-07-29", status: "New", type: "Service Inquiry" },
+const sampleInquiriesData: Inquiry[] = [
+  { id: "inq_001", name: "John Doe", email: "john.doe@example.com", subject: "Service Question about Web Dev", date: "2024-07-28", status: "New", type: "General Contact", message: "Hello, I have a question regarding your web development services. Can you tell me more about the process?" },
+  { id: "inq_002", name: "Jane Smith", email: "jane.smith@example.com", subject: "Quote for Web Dev Project", date: "2024-07-27", status: "Read", type: "Service Inquiry", message: "Hi, I'd like to get a quote for a new e-commerce website. My budget is X and timeline is Y." },
+  { id: "inq_003", name: "Bob Johnson", email: "bob.johnson@example.com", subject: "Partnership Opportunity", date: "2024-07-26", status: "Archived", type: "General Contact", message: "We are interested in exploring a partnership with your company. Please let me know if you are available for a call." },
+  { id: "inq_004", name: "Alice Brown", email: "alice.brown@example.com", subject: "Mobile App Idea Discussion", date: "2024-07-29", status: "New", type: "Service Inquiry", message: "I have an exciting idea for a mobile application and would love to discuss it with your team to see if it's feasible." },
+  { id: "inq_005", name: "Charlie Green", email: "charlie.green@example.com", subject: "Feedback on UI/UX Design Service", date: "2024-07-30", status: "Read", type: "General Contact", message: "Just wanted to provide some positive feedback on the UI/UX design service I received. It was excellent!" },
 ];
 
 export default function AdminInquiriesPage() {
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
   const [isViewDialogOpen, setIsViewDialogOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState<Inquiry['status'] | "All">("All");
 
   const handleViewClick = (inquiry: Inquiry) => {
     setSelectedInquiry(inquiry);
@@ -52,7 +63,7 @@ export default function AdminInquiriesPage() {
   const getStatusBadgeVariant = (status: Inquiry['status']) => {
     switch (status) {
       case "New":
-        return "destructive"; // Often used for "new" or "urgent"
+        return "destructive"; 
       case "Read":
         return "default";
       case "Archived":
@@ -66,6 +77,19 @@ export default function AdminInquiriesPage() {
      if (status === "New") return "bg-green-500 text-white hover:bg-green-600";
      return "";
   }
+
+  const filteredInquiries = useMemo(() => {
+    return sampleInquiriesData.filter(inquiry => {
+      const matchesSearchTerm = searchTerm.toLowerCase() === "" ||
+        inquiry.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        inquiry.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        inquiry.subject.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      const matchesStatusFilter = statusFilter === "All" || inquiry.status === statusFilter;
+
+      return matchesSearchTerm && matchesStatusFilter;
+    });
+  }, [searchTerm, statusFilter]);
 
   return (
     <div className="space-y-6">
@@ -83,16 +107,35 @@ export default function AdminInquiriesPage() {
           <div className="pt-4 flex flex-col sm:flex-row gap-2">
             <div className="relative flex-1">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input placeholder="Search inquiries by name, email, or subject..." className="pl-8 w-full" />
+              <Input 
+                placeholder="Search inquiries by name, email, or subject..." 
+                className="pl-8 w-full" 
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
             </div>
-            <Button variant="outline">
-              <Filter className="mr-2 h-4 w-4" />
-              Filter
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline">
+                  <FilterIcon className="mr-2 h-4 w-4" />
+                  Filter by Status: {statusFilter}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56">
+                <DropdownMenuLabel>Filter by Status</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuRadioGroup value={statusFilter} onValueChange={(value) => setStatusFilter(value as Inquiry['status'] | "All")}>
+                  <DropdownMenuRadioItem value="All">All</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="New">New</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="Read">Read</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="Archived">Archived</DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </CardHeader>
         <CardContent>
-          {sampleInquiries.length > 0 ? (
+          {filteredInquiries.length > 0 ? (
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
@@ -107,7 +150,7 @@ export default function AdminInquiriesPage() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {sampleInquiries.map((inquiry) => (
+                  {filteredInquiries.map((inquiry) => (
                     <TableRow key={inquiry.id}>
                       <TableCell className="font-medium">{inquiry.name}</TableCell>
                       <TableCell className="hidden sm:table-cell text-sm text-muted-foreground">{inquiry.email}</TableCell>
@@ -139,9 +182,9 @@ export default function AdminInquiriesPage() {
           ) : (
             <div className="text-center py-12">
               <Mail className="mx-auto h-12 w-12 text-muted-foreground" />
-              <h3 className="mt-2 text-xl font-semibold">No Inquiries Yet</h3>
+              <h3 className="mt-2 text-xl font-semibold">No Inquiries Found</h3>
               <p className="mt-1 text-sm text-muted-foreground">
-                When users submit contact forms or service requests, they will appear here.
+                No inquiries match your current search or filter criteria.
               </p>
             </div>
           )}
@@ -176,17 +219,15 @@ export default function AdminInquiriesPage() {
               </div>
               
               <div className="space-y-1">
-                <p className="font-medium">Message (Placeholder):</p>
-                <div className="p-3 border rounded bg-muted/30 text-muted-foreground min-h-[100px]">
-                  This is where the full message content from the inquiry would be displayed. 
-                  For this demonstration, we are only showing summary information.
-                  In a real application, the complete message submitted by the user would appear here.
+                <p className="font-medium">Message:</p>
+                <div className="p-3 border rounded bg-muted/30 text-muted-foreground min-h-[100px] whitespace-pre-wrap">
+                  {selectedInquiry.message || "No message content provided."}
                 </div>
               </div>
             </div>
             <AlertDialogFooter>
               <AlertDialogCancel>Close</AlertDialogCancel>
-              {/* Example of another action button */}
+              {/* Example: Add actions like "Mark as Read", "Archive" etc. here in a real app */}
               {/* <AlertDialogAction onClick={() => alert('Marked as read (placeholder)')}>Mark as Read</AlertDialogAction> */}
             </AlertDialogFooter>
           </AlertDialogContent>

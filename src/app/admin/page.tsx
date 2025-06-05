@@ -1,58 +1,102 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Briefcase, Newspaper, Users, Mail } from "lucide-react";
+import { Briefcase, Newspaper, Users, Mail, BarChart3, Activity, Link as LinkIcon } from "lucide-react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function AdminDashboardPage() {
   const summaryCards = [
-    { title: "Total Leads/Messages", value: "125", icon: Mail, description: "New inquiries this month" },
-    { title: "Projects Completed", value: "42", icon: Briefcase, description: "Successfully delivered projects" },
-    { title: "Blog Posts", value: "18", icon: Newspaper, description: "Published articles" },
-    { title: "Job Applications", value: "3", icon: Users, description: "New candidates to review" },
+    { title: "Total Leads/Messages", value: "125", icon: Mail, description: "New inquiries this month", href: "/admin/inquiries" },
+    { title: "Projects Completed", value: "42", icon: Briefcase, description: "Successfully delivered projects", href: "/admin/portfolio" },
+    { title: "Blog Posts", value: "18", icon: Newspaper, description: "Published articles", href: "/admin/blog" },
+    { title: "Job Applications", value: "3", icon: Users, description: "New candidates to review", href: "/admin/jobs" },
+  ];
+
+  const quickLinks = [
+    { label: "Manage Services", href: "/admin/services", icon: Briefcase },
+    { label: "Manage Portfolio", href: "/admin/portfolio", icon: Users },
+    { label: "Manage Blog Posts", href: "/admin/blog", icon: Newspaper },
+    { label: "View Inquiries", href: "/admin/inquiries", icon: Mail },
+    { label: "Manage Job Applications", href: "/admin/jobs", icon: Users },
+    { label: "Team Management", href: "/admin/team", icon: Users },
+    { label: "Site Settings", href: "/admin/settings", icon: LinkIcon },
   ];
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold text-primary">Admin Dashboard</h1>
+    <div className="space-y-8 p-4 md:p-6">
+      <h1 className="text-3xl md:text-4xl font-bold text-primary">Admin Dashboard</h1>
       
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {summaryCards.map((card) => (
-          <Card key={card.title} className="shadow-md">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">{card.title}</CardTitle>
-              <card.icon className="h-5 w-5 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{card.value}</div>
-              <p className="text-xs text-muted-foreground">{card.description}</p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      <section>
+        <h2 className="text-2xl font-semibold mb-4 text-foreground/80">Overview</h2>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {summaryCards.map((card) => (
+            <Card key={card.title} className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium text-muted-foreground">{card.title}</CardTitle>
+                <card.icon className="h-5 w-5 text-primary" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-bold text-foreground">{card.value}</div>
+                <p className="text-xs text-muted-foreground pt-1">{card.description}</p>
+                <Button variant="link" asChild className="px-0 pt-2 text-sm text-primary">
+                  <Link href={card.href}>View Details &rarr;</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
 
-      <div className="grid gap-6 md:grid-cols-2">
-        <Card className="shadow-md">
+      <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <Card className="lg:col-span-2 shadow-md">
           <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
-            <CardDescription>Placeholder for recent admin actions or notifications.</CardDescription>
+            <CardTitle className="flex items-center gap-2">
+              <BarChart3 className="h-6 w-6 text-primary" />
+              Analytics Placeholder
+            </CardTitle>
+            <CardDescription>Monthly traffic, inquiry trends, project status (charts will go here).</CardDescription>
           </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground">Activity log will appear here...</p>
+          <CardContent className="h-64 flex items-center justify-center bg-muted/30 rounded-md">
+            <p className="text-muted-foreground">Chart Data Will Be Displayed Here</p>
           </CardContent>
         </Card>
+        
         <Card className="shadow-md">
           <CardHeader>
-            <CardTitle>Quick Links</CardTitle>
-            <CardDescription>Placeholder for frequently accessed admin sections.</CardDescription>
+            <CardTitle className="flex items-center gap-2">
+              <Activity className="h-6 w-6 text-primary" />
+              Recent Activity / Notifications
+            </CardTitle>
+            <CardDescription>Latest submissions and system events.</CardDescription>
           </CardHeader>
-          <CardContent>
-            <ul className="space-y-2 text-primary">
-              <li><a href="/admin/blog" className="hover:underline">Manage Blog Posts</a></li>
-              <li><a href="/admin/services" className="hover:underline">Update Services</a></li>
-              <li><a href="/admin/settings" className="hover:underline">General Settings</a></li>
-            </ul>
+          <CardContent className="space-y-3">
+            {["New contact form submitted.", "Project 'Alpha' marked as complete.", "User 'editor_jane' logged in."].map((activity, index) => (
+              <div key={index} className="text-sm p-2 bg-secondary/50 rounded-md">
+                <p className="text-foreground/90">{activity}</p>
+                <p className="text-xs text-muted-foreground">{(index + 1) * 5} minutes ago</p>
+              </div>
+            ))}
+             <Button variant="outline" className="w-full mt-2">View All Activity</Button>
           </CardContent>
         </Card>
-      </div>
+      </section>
+      
+      <section>
+        <h2 className="text-2xl font-semibold mb-4 text-foreground/80">Quick Links</h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {quickLinks.map(link => {
+            const Icon = link.icon || LinkIcon;
+            return (
+            <Button variant="outline" asChild key={link.href} className="justify-start text-base py-6 h-auto hover:bg-primary/5 hover:border-primary">
+              <Link href={link.href} className="flex flex-col items-center justify-center text-center p-2 sm:flex-row sm:justify-start sm:text-left sm:p-4">
+                <Icon className="h-6 w-6 mb-2 sm:mb-0 sm:mr-3 text-primary" />
+                <span className="text-sm font-medium text-foreground">{link.label}</span>
+              </Link>
+            </Button>
+          );
+        })}
+        </div>
+      </section>
     </div>
   );
 }

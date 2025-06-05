@@ -80,7 +80,7 @@ export default function ContactPage() {
       <section className="py-16 md:py-24 bg-secondary/30">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Our Location</h2>
-          <div className="aspect-w-16 aspect-h-9 rounded-lg shadow-xl overflow-hidden">
+          <div className="h-[450px] rounded-lg shadow-xl overflow-hidden">
             <iframe
               className="w-full h-full"
               style={{ border: 0 }}

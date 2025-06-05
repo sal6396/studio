@@ -3,6 +3,7 @@ import { ProjectCard } from '@/components/cards/ProjectCard';
 import { TestimonialCard } from '@/components/cards/TestimonialCard';
 import type { Metadata } from 'next';
 import Image from 'next/image';
+import { Badge } from '@/components/ui/badge';
 
 export const metadata: Metadata = {
   title: `Our Portfolio | ${COMPANY_NAME}`,

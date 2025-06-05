@@ -19,7 +19,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Save } from "lucide-react";
 import { useState, useEffect } from "react";
-import { COMPANY_NAME, CONTACT_DETAILS } from "@/lib/constants"; // For pre-filling
+import { COMPANY_NAME, CONTACT_DETAILS, APP_NAME } from "@/lib/constants"; // For pre-filling
 
 const companyInfoSchema = z.object({
   companyName: z.string().min(2, { message: "Company name must be at least 2 characters." }),

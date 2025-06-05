@@ -3,21 +3,26 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Briefcase, Newspaper, Users, Mail, BarChart3, Activity, Link as LinkIcon, Award, Settings } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { BLOG_POSTS_DATA, PORTFOLIO_DATA, JOB_LISTINGS_DATA } from "@/lib/constants";
 
 export default function AdminDashboardPage() {
+  const publishedProjectsCount = PORTFOLIO_DATA.filter(p => p.isPublished !== false).length;
+  const blogPostsCount = BLOG_POSTS_DATA.length;
+  const jobListingsCount = JOB_LISTINGS_DATA.length;
+
   const summaryCards = [
     { title: "Total Leads/Messages", value: "0", icon: Mail, description: "New inquiries this month", href: "/admin/inquiries" },
-    { title: "Projects Completed", value: "0", icon: Briefcase, description: "Successfully delivered projects", href: "/admin/portfolio" },
-    { title: "Blog Posts", value: "0", icon: Newspaper, description: "Published articles", href: "/admin/blog" },
-    { title: "Job Applications", value: "0", icon: Users, description: "New candidates to review", href: "/admin/jobs" },
+    { title: "Published Projects", value: publishedProjectsCount.toString(), icon: Briefcase, description: "Published portfolio items", href: "/admin/portfolio" },
+    { title: "Blog Posts", value: blogPostsCount.toString(), icon: Newspaper, description: "Published articles", href: "/admin/blog" },
+    { title: "Open Job Listings", value: jobListingsCount.toString(), icon: Award, description: "Current job openings", href: "/admin/jobs" },
   ];
 
   const quickLinks = [
     { label: "Manage Services", href: "/admin/services", icon: Briefcase },
-    { label: "Manage Portfolio", href: "/admin/portfolio", icon: Users }, // Changed icon to Users for variety
+    { label: "Manage Portfolio", href: "/admin/portfolio", icon: LayoutGrid }, // Changed icon to LayoutGrid to match nav
     { label: "Manage Blog Posts", href: "/admin/blog", icon: Newspaper },
     { label: "View Inquiries", href: "/admin/inquiries", icon: Mail },
-    { label: "Manage Job Applications", href: "/admin/jobs", icon: Award },
+    { label: "Manage Job Listings", href: "/admin/jobs", icon: Award }, // Label changed for consistency
     { label: "Team Management", href: "/admin/team", icon: Users },
     { label: "Site Settings", href: "/admin/settings", icon: Settings },
   ];

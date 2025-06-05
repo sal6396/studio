@@ -1,7 +1,9 @@
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { NAV_LINKS, APP_NAME, CONTACT_DETAILS, COMPANY_NAME, Icons } from '@/lib/constants';
-import { Facebook, Twitter, Linkedin, Instagram, Youtube, Briefcase } from 'lucide-react';
+import { Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import Image from "next/image";
 
 export default function Footer() {
   const socialLinks = [
@@ -16,9 +18,15 @@ export default function Footer() {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           <div>
-            <Link href="/" className="flex items-center gap-2 text-2xl font-bold text-primary mb-4 font-headline">
-              <Briefcase className="h-8 w-8" />
-              <span>{APP_NAME}</span>
+            <Link href="/" className="flex items-center mb-4">
+              <Image
+                src="/logo.png"
+                alt={`${COMPANY_NAME} Logo`}
+                width={170}
+                height={40}
+                className="h-10 w-auto"
+                data-ai-hint="company logo blue gold"
+              />
             </Link>
             <p className="text-sm text-muted-foreground">
               {COMPANY_NAME} provides innovative software solutions to empower your digital future.

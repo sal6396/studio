@@ -5,10 +5,11 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
-import { Menu, X, Briefcase } from "lucide-react";
-import { NAV_LINKS, APP_NAME, Icons } from "@/lib/constants";
+import { Menu, X } from "lucide-react";
+import { NAV_LINKS, APP_NAME, COMPANY_NAME } from "@/lib/constants";
 import { usePathname } from 'next/navigation';
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export default function Header() {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
@@ -28,9 +29,16 @@ export default function Header() {
   return (
     <header className="bg-card shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 text-2xl font-bold text-primary font-headline">
-          <Briefcase className="h-8 w-8" />
-          <span>{APP_NAME}</span>
+        <Link href="/" className="flex items-center">
+          <Image
+            src="/logo.png" 
+            alt={`${COMPANY_NAME} Logo`}
+            width={170} 
+            height={40}
+            className="h-10 w-auto" 
+            data-ai-hint="company logo blue gold"
+            priority 
+          />
         </Link>
 
         <nav className="hidden md:flex items-center space-x-2 lg:space-x-4">
@@ -62,9 +70,15 @@ export default function Header() {
             </SheetTrigger>
             <SheetContent side="right" className="w-full max-w-xs bg-card p-6">
               <div className="flex justify-between items-center mb-8">
-                <Link href="/" className="flex items-center gap-2 text-xl font-bold text-primary font-headline" onClick={closeSheet}>
-                  <Briefcase className="h-7 w-7" />
-                  <span>{APP_NAME}</span>
+                <Link href="/" className="flex items-center" onClick={closeSheet}>
+                  <Image
+                    src="/logo.png"
+                    alt={`${COMPANY_NAME} Logo`}
+                    width={150}
+                    height={35}
+                    className="h-9 w-auto"
+                    data-ai-hint="company logo blue gold"
+                  />
                 </Link>
                 <SheetClose asChild>
                   <Button variant="ghost" size="icon">

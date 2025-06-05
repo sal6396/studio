@@ -1,11 +1,22 @@
 
+"use client"; // Make this a client component to use state
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { NAV_LINKS, APP_NAME, CONTACT_DETAILS, COMPANY_NAME, Icons } from '@/lib/constants';
 import { Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
 import Image from "next/image";
+import { useState, useEffect } from 'react'; // Import useState and useEffect
 
 export default function Footer() {
+  const [logoError, setLogoError] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+
   const socialLinks = [
     { name: 'Facebook', icon: Facebook, href: '#' },
     { name: 'Twitter', icon: Twitter, href: '#' },
@@ -13,20 +24,37 @@ export default function Footer() {
     { name: 'Instagram', icon: Instagram, href: '#' },
   ];
 
+  const LogoDisplay = () => {
+    if (!isMounted) { // Fallback during SSR or before hydration
+      return <span className="font-bold text-xl text-primary">{COMPANY_NAME}</span>;
+    }
+    return (
+      <>
+        {!logoError ? (
+          <Image
+            src="/logo.png"
+            alt={`${COMPANY_NAME} Logo`}
+            width={170}
+            height={40}
+            className="h-10 w-auto"
+            data-ai-hint="company logo blue gold"
+            onError={() => setLogoError(true)}
+          />
+        ) : (
+          <span className="font-bold text-xl text-primary">{COMPANY_NAME}</span>
+        )}
+      </>
+    );
+  };
+
+
   return (
     <footer className="bg-card border-t border-border text-foreground py-12">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           <div>
             <Link href="/" className="flex items-center mb-4">
-              <Image
-                src="/logo.png"
-                alt={`${COMPANY_NAME} Logo`}
-                width={170}
-                height={40}
-                className="h-10 w-auto"
-                data-ai-hint="company logo blue gold"
-              />
+              <LogoDisplay />
             </Link>
             <p className="text-sm text-muted-foreground">
               {COMPANY_NAME} provides innovative software solutions to empower your digital future.

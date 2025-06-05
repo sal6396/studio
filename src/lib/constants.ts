@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
-import { Smartphone, Globe, Palette, Settings2, Megaphone, Award, Users, LayoutGrid, Newspaper, Mail, MapPin, Phone, MessageCircle, CheckCircle2, Briefcase, Component } from 'lucide-react';
+import { Smartphone, Globe, Palette, Settings2, Megaphone, Award, Users, LayoutGrid, Newspaper, Mail, MapPin, Phone, MessageCircle, CheckCircle2, Briefcase, Component, Settings, LayoutDashboard, ShoppingBag, FileText, BarChart3 } from 'lucide-react';
 
 export const APP_NAME = "Alif Solutions Hub";
 export const COMPANY_NAME = "Alif InfoTech Solutions";
@@ -19,6 +19,18 @@ export const NAV_LINKS: NavLink[] = [
   { href: '/blog', label: 'Blog', icon: Newspaper },
   { href: '/contact', label: 'Contact Us', icon: Mail },
 ];
+
+export const ADMIN_NAV_LINKS: NavLink[] = [
+  { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/admin/services', label: 'Services', icon: Briefcase },
+  { href: '/admin/portfolio', label: 'Portfolio', icon: LayoutGrid },
+  { href: '/admin/blog', label: 'Blog', icon: Newspaper },
+  { href: '/admin/inquiries', label: 'Inquiries', icon: Mail },
+  { href: '/admin/jobs', label: 'Job Applications', icon: Award },
+  { href: '/admin/team', label: 'Team', icon: Users },
+  { href: '/admin/settings', label: 'Settings', icon: Settings },
+];
+
 
 export type Service = {
   slug: string;
@@ -269,5 +281,11 @@ export const Icons = {
   whatsApp: MessageCircle,
   check: CheckCircle2,
   generic: Component,
+  settings: Settings,
+  dashboard: LayoutDashboard,
+  products: ShoppingBag, // Example, can be changed
+  orders: FileText, // Example, can be changed
+  analytics: BarChart3, // Example, can be changed
 };
 
+```

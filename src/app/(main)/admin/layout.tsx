@@ -1,18 +1,2 @@
-
-import AdminSidebar from "@/components/layout/AdminSidebar";
-import type { ReactNode } from 'react';
-
-export default function AdminLayout({
-  children,
-}: {
-  children: ReactNode;
-}) {
-  return (
-    <div className="flex h-screen bg-background">
-      <AdminSidebar />
-      <main className="flex-1 overflow-y-auto p-6">
-        {children}
-      </main>
-    </div>
-  );
-}
+// This layout has been moved to /src/app/admin/layout.tsx to resolve a routing conflict.
+// This file is intentionally modified to prevent defining a duplicate route.

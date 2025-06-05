@@ -3,7 +3,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { AdminSettingsForm } from "@/components/forms/AdminSettingsForm";
-import { Building, SearchCog } from "lucide-react";
+import { Building, SearchCode } from "lucide-react"; // Changed SearchCog to SearchCode
 
 export default function AdminSettingsPage() {
   return (
@@ -26,7 +26,7 @@ export default function AdminSettingsPage() {
       <Card className="shadow-lg">
         <CardHeader>
           <div className="flex items-center gap-3">
-            <SearchCog className="h-6 w-6 text-primary" />
+            <SearchCode className="h-6 w-6 text-primary" /> {/* Changed SearchCog to SearchCode */}
             <CardTitle className="text-2xl">Basic SEO Settings</CardTitle>
           </div>
           <CardDescription>Set default SEO metadata for your site. These can often be overridden by page-specific settings.</CardDescription>
@@ -56,3 +56,4 @@ export default function AdminSettingsPage() {
     </div>
   );
 }
+

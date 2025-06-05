@@ -6,24 +6,24 @@ import { Button } from "@/components/ui/button";
 
 export default function AdminDashboardPage() {
   const summaryCards = [
-    { title: "Total Leads/Messages", value: "125", icon: Mail, description: "New inquiries this month", href: "/admin/inquiries" },
-    { title: "Projects Completed", value: "42", icon: Briefcase, description: "Successfully delivered projects", href: "/admin/portfolio" },
-    { title: "Blog Posts", value: "18", icon: Newspaper, description: "Published articles", href: "/admin/blog" },
-    { title: "Job Applications", value: "3", icon: Users, description: "New candidates to review", href: "/admin/jobs" },
+    { title: "Total Leads/Messages", value: "0", icon: Mail, description: "New inquiries this month", href: "/admin/inquiries" },
+    { title: "Projects Completed", value: "0", icon: Briefcase, description: "Successfully delivered projects", href: "/admin/portfolio" },
+    { title: "Blog Posts", value: "0", icon: Newspaper, description: "Published articles", href: "/admin/blog" },
+    { title: "Job Applications", value: "0", icon: Users, description: "New candidates to review", href: "/admin/jobs" },
   ];
 
   const quickLinks = [
     { label: "Manage Services", href: "/admin/services", icon: Briefcase },
-    { label: "Manage Portfolio", href: "/admin/portfolio", icon: Users },
+    { label: "Manage Portfolio", href: "/admin/portfolio", icon: Users }, // Changed icon to Users for variety
     { label: "Manage Blog Posts", href: "/admin/blog", icon: Newspaper },
     { label: "View Inquiries", href: "/admin/inquiries", icon: Mail },
-    { label: "Manage Job Applications", href: "/admin/jobs", icon: Users },
+    { label: "Manage Job Applications", href: "/admin/jobs", icon: Award }, // Used Award icon
     { label: "Team Management", href: "/admin/team", icon: Users },
-    { label: "Site Settings", href: "/admin/settings", icon: LinkIcon },
+    { label: "Site Settings", href: "/admin/settings", icon: Settings }, // Used Settings icon
   ];
 
   return (
-    <div className="space-y-8 p-4 md:p-6">
+    <div className="space-y-8">
       <h1 className="text-3xl md:text-4xl font-bold text-primary">Admin Dashboard</h1>
       
       <section>
@@ -85,7 +85,7 @@ export default function AdminDashboardPage() {
         <h2 className="text-2xl font-semibold mb-4 text-foreground/80">Quick Links</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {quickLinks.map(link => {
-            const Icon = link.icon || LinkIcon;
+            const Icon = link.icon || LinkIcon; // Default to LinkIcon if specific one is not provided
             return (
             <Button variant="outline" asChild key={link.href} className="justify-start text-base py-6 h-auto hover:bg-primary/5 hover:border-primary">
               <Link href={link.href} className="flex flex-col items-center justify-center text-center p-2 sm:flex-row sm:justify-start sm:text-left sm:p-4">

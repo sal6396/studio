@@ -10,13 +10,33 @@ import { PORTFOLIO_DATA, type Project } from "@/lib/constants";
 import { MoreHorizontal, Pencil, PlusCircle, Trash2, Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-// Removed useState as it's not directly used for projectStates anymore
+import { useState, useEffect } from "react"; // Added useState and useEffect
 
 export default function AdminPortfolioPage() {
   const projects: Project[] = PORTFOLIO_DATA;
   
-  // The handlePublishToggle and projectStates logic has been simplified/removed
-  // as it's a placeholder for now. True backend integration would handle this.
+  // State to manage the publish status of each project
+  const [projectPublishStates, setProjectPublishStates] = useState<Record<string, boolean>>({});
+
+  // Initialize publish states when component mounts or projects data changes
+  useEffect(() => {
+    const initialStates: Record<string, boolean> = {};
+    projects.forEach(project => {
+      // Default all projects to published if no status is stored
+      // In a real app, this would come from project.isPublished or similar
+      initialStates[project.id] = true; 
+    });
+    setProjectPublishStates(initialStates);
+  }, [projects]);
+
+  const handlePublishToggle = (projectId: string, checked: boolean) => {
+    setProjectPublishStates(prevStates => ({
+      ...prevStates,
+      [projectId]: checked,
+    }));
+    // In a real app, you would also make an API call here to update the backend
+    console.log(`Project ${projectId} publish status changed to: ${checked}`);
+  };
 
   return (
     <div className="space-y-6">
@@ -51,8 +71,7 @@ export default function AdminPortfolioPage() {
                 </TableHeader>
                 <TableBody>
                   {projects.map((project) => {
-                    // For now, visibility is just a visual placeholder
-                    const isPublished = true; // Simplified for now
+                    const isPublished = projectPublishStates[project.id] ?? true; // Default to true if not found
                     return (
                       <TableRow key={project.id}>
                         <TableCell className="hidden sm:table-cell">
@@ -77,7 +96,7 @@ export default function AdminPortfolioPage() {
                             <Switch
                               id={`visibility-${project.id}`}
                               checked={isPublished}
-                              // onCheckedChange={(checked) => handlePublishToggle(project.id, checked)} // Placeholder
+                              onCheckedChange={(checked) => handlePublishToggle(project.id, checked)}
                               aria-label={`Toggle publish status for ${project.title}`}
                             />
                              <span className="text-xs mt-1 text-muted-foreground">

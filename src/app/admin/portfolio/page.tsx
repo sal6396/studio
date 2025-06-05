@@ -10,23 +10,13 @@ import { PORTFOLIO_DATA, type Project } from "@/lib/constants";
 import { MoreHorizontal, Pencil, PlusCircle, Trash2, Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react"; // Import useState if you plan to use it for local state
+// Removed useState as it's not directly used for projectStates anymore
 
 export default function AdminPortfolioPage() {
   const projects: Project[] = PORTFOLIO_DATA;
-  // Example state if needed for interactivity, e.g., managing publish status locally
-  // const [projectStates, setProjectStates] = useState<Record<string, { published: boolean }>>(
-  //   projects.reduce((acc, project) => {
-  //     acc[project.id] = { published: true }; // Default to true or fetch from backend
-  //     return acc;
-  //   }, {} as Record<string, { published: boolean }>)
-  // );
-
-  // const handlePublishToggle = (projectId: string, checked: boolean) => {
-  //   setProjectStates(prev => ({ ...prev, [projectId]: { ...prev[projectId], published: checked } }));
-  //   // In a real app, you'd also send this update to your backend
-  //   console.log(`Project ${projectId} publish status changed to: ${checked}`);
-  // };
+  
+  // The handlePublishToggle and projectStates logic has been simplified/removed
+  // as it's a placeholder for now. True backend integration would handle this.
 
   return (
     <div className="space-y-6">
@@ -62,7 +52,6 @@ export default function AdminPortfolioPage() {
                 <TableBody>
                   {projects.map((project) => {
                     // For now, visibility is just a visual placeholder
-                    // const isPublished = projectStates[project.id]?.published ?? true;
                     const isPublished = true; // Simplified for now
                     return (
                       <TableRow key={project.id}>
@@ -88,7 +77,7 @@ export default function AdminPortfolioPage() {
                             <Switch
                               id={`visibility-${project.id}`}
                               checked={isPublished}
-                              // onCheckedChange={(checked) => handlePublishToggle(project.id, checked)}
+                              // onCheckedChange={(checked) => handlePublishToggle(project.id, checked)} // Placeholder
                               aria-label={`Toggle publish status for ${project.title}`}
                             />
                              <span className="text-xs mt-1 text-muted-foreground">

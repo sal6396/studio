@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Briefcase, Newspaper, Users, Mail, BarChart3, Activity, Link as LinkIcon } from "lucide-react";
+import { Briefcase, Newspaper, Users, Mail, BarChart3, Activity, Link as LinkIcon, Award, Settings } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
@@ -17,9 +17,9 @@ export default function AdminDashboardPage() {
     { label: "Manage Portfolio", href: "/admin/portfolio", icon: Users }, // Changed icon to Users for variety
     { label: "Manage Blog Posts", href: "/admin/blog", icon: Newspaper },
     { label: "View Inquiries", href: "/admin/inquiries", icon: Mail },
-    { label: "Manage Job Applications", href: "/admin/jobs", icon: Award }, // Used Award icon
+    { label: "Manage Job Applications", href: "/admin/jobs", icon: Award },
     { label: "Team Management", href: "/admin/team", icon: Users },
-    { label: "Site Settings", href: "/admin/settings", icon: Settings }, // Used Settings icon
+    { label: "Site Settings", href: "/admin/settings", icon: Settings },
   ];
 
   return (

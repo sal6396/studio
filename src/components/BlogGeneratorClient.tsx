@@ -1,6 +1,8 @@
+
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState, useOptimistic, useTransition } from "react"; // Updated import
+import { useFormStatus } from "react-dom";
 import { handleGenerateBlogContent, type BlogGenerationFormState } from "@/app/actions/blogActions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Loader2, AlertCircle, CheckCircle2, Copy } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react"; // Added useState
 import { useToast } from "@/hooks/use-toast";
 import { Slider } from "@/components/ui/slider";
 
@@ -35,9 +37,10 @@ function SubmitButton() {
 }
 
 export default function BlogGeneratorClient() {
-  const [state, formAction] = useFormState(handleGenerateBlogContent, initialState);
+  const [state, formAction] = useActionState(handleGenerateBlogContent, initialState); // Updated to useActionState
   const formRef = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
+  const [numVariationsDisplay, setNumVariationsDisplay] = useState(3); // For displaying slider value
 
   useEffect(() => {
     if (state.message) {
@@ -99,29 +102,21 @@ export default function BlogGeneratorClient() {
           </div>
           
           <div>
-            <Label htmlFor="numVariations" className="text-lg font-medium">Number of Variations (1-5)</Label>
+            <Label htmlFor="numVariationsSlider" className="text-lg font-medium">Number of Variations ({numVariationsDisplay})</Label>
             <Slider
-              id="numVariations"
-              name="numVariations"
-              defaultValue={[3]}
+              id="numVariationsSlider"
+              defaultValue={[numVariationsDisplay]}
               min={1}
               max={5}
               step={1}
               className="my-4"
+              onValueChange={(value) => setNumVariationsDisplay(value[0])}
             />
-             {/* Hidden input to actually submit slider value, or use JS to update a hidden input */}
-            <Input type="hidden" name="numVariations" defaultValue={state.fields?.numVariations || "3"} 
-              ref={input => {
-                const slider = document.getElementById('numVariations') as HTMLInputElement | null; // This is not a standard HTML element, slider is custom
-                // This part needs a proper way to get slider value for form submission if not using JS state.
-                // For ShadCN slider, you often manage state with React state and pass it.
-                // Since this is a form action, we'll rely on a simple hidden input for now, assuming the slider can update it.
-                // A more robust solution would use React state for the slider and set the hidden input value onChange.
-                // Or simply use a number input instead of a slider for simplicity with form actions without JS state for the slider.
-                // For now, let's assume '3' default if not changed manually in a real number input (slider doesn't have name prop for forms easily)
-              }}
-            />
+            <Input type="hidden" name="numVariations" value={numVariationsDisplay} />
             <p className="text-sm text-muted-foreground">Select how many different versions of the blog post you want.</p>
+             {state.issues?.find(issue => issue.startsWith('numVariations:')) && (
+              <p className="text-sm text-destructive mt-1">{state.issues.find(issue => issue.startsWith('numVariations:'))?.replace('numVariations: ', '')}</p>
+            )}
           </div>
         </CardContent>
         <CardFooter className="flex flex-col items-stretch">
@@ -170,7 +165,6 @@ export default function BlogGeneratorClient() {
                     className="min-h-[200px] bg-background text-foreground"
                     aria-label={`Generated Blog Content Variation ${index + 1}`}
                   />
-                  {/* In a real app, provide "Edit & Publish" options */}
                 </CardContent>
               </Card>
             ))}

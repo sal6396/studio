@@ -245,9 +245,9 @@ export const BLOG_POSTS_DATA: BlogPost[] = [
 
 export const CONTACT_DETAILS = {
   address: "123 Tech Park, Silicon Valley, CA 94000",
-  phone: "+1 (555) 123-4567",
+  phone: "+918968698818",
   email: "info@alifinfotech.com",
-  whatsapp: "+15551234567" // international format without '+' or '00' for wa.me link
+  whatsapp: "+918968698818" // international format without '+' or '00' for wa.me link
 };
 
 // Lucide Icons

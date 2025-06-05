@@ -279,7 +279,7 @@ export const TEAM_MEMBERS_DATA: TeamMember[] = [
 
 
 export const CONTACT_DETAILS = {
-  address: "123 Tech Park, Silicon Valley, CA 94000",
+  address: "Alif InfoTech Solutions (MobileApp and Website developmen), Dayalpura, Zirakpur, Dyalpur, Punjab 140603",
   phone: "+918968698818",
   email: "info@alifinfotech.com",
   whatsapp: "+918968698818" 

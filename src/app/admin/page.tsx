@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Briefcase, Newspaper, Users, Mail, BarChart3, Activity, Link as LinkIcon, Award, Settings } from "lucide-react";
+import { Briefcase, Newspaper, Users, Mail, BarChart3, Activity, Link as LinkIcon, Award, Settings, LayoutGrid } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { BLOG_POSTS_DATA, PORTFOLIO_DATA, JOB_LISTINGS_DATA } from "@/lib/constants";
@@ -105,3 +105,4 @@ export default function AdminDashboardPage() {
     </div>
   );
 }
+

@@ -9,20 +9,25 @@ import { COMPANY_NAME } from "@/lib/constants";
 import Link from "next/link";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation"; // Import useRouter
 
 export default function AdminLoginPage() {
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter(); // Initialize useRouter
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
     // Placeholder for actual login logic
-    console.log("Login attempt");
+    console.log("Login attempt - simulating success");
+
+    // Simulate successful login
+    localStorage.setItem('isAdminLoggedIn', 'true');
+
     setTimeout(() => {
       setIsLoading(false);
-      // Simulate redirect or error
-      alert("Login functionality is a placeholder.");
-    }, 1500);
+      router.push('/admin'); // Redirect to admin dashboard
+    }, 1000); // Simulate network delay
   };
 
   return (
@@ -36,7 +41,7 @@ export default function AdminLoginPage() {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="admin@example.com" required />
+              <Input id="email" type="email" placeholder="admin@example.com" required defaultValue="admin@example.com" />
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
@@ -45,7 +50,7 @@ export default function AdminLoginPage() {
                   Forgot password?
                 </Link>
               </div>
-              <Input id="password" type="password" required />
+              <Input id="password" type="password" required defaultValue="password" />
             </div>
           </CardContent>
           <CardFooter className="flex flex-col gap-4">
@@ -53,7 +58,7 @@ export default function AdminLoginPage() {
               {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : "Login"}
             </Button>
              <p className="text-xs text-center text-muted-foreground">
-                This is a placeholder login page. Actual authentication will be implemented later.
+                This is a simulated login. Any credentials will "work".
             </p>
           </CardFooter>
         </form>

@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation"; // Import useRouter
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
@@ -24,6 +24,12 @@ import { ThemeToggle } from "@/components/admin/ThemeToggle";
 
 export default function AdminSidebar() {
   const pathname = usePathname();
+  const router = useRouter(); // Initialize useRouter
+
+  const handleLogout = () => {
+    localStorage.removeItem('isAdminLoggedIn');
+    router.push('/admin/login');
+  };
 
   return (
     <SidebarProvider defaultOpen>
@@ -66,7 +72,7 @@ export default function AdminSidebar() {
         </ScrollArea>
         <SidebarFooter className="p-4 border-t">
           <div className="flex items-center justify-between w-full">
-            <Button variant="outline" className="flex-grow justify-start text-base h-12 mr-2">
+            <Button variant="outline" className="flex-grow justify-start text-base h-12 mr-2" onClick={handleLogout}>
               <LogOut className="mr-3 h-5 w-5" />
               Logout
             </Button>

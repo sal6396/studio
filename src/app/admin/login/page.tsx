@@ -6,33 +6,28 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { COMPANY_NAME } from "@/lib/constants";
-// Link component is no longer needed for a simple alert
+import Link from "next/link"; // Import Link
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation"; // Import useRouter
+import { useRouter } from "next/navigation"; 
 
 export default function AdminLoginPage() {
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter(); // Initialize useRouter
+  const router = useRouter(); 
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
-    // Placeholder for actual login logic
     console.log("Login attempt - simulating success");
-
-    // Simulate successful login
     localStorage.setItem('isAdminLoggedIn', 'true');
 
     setTimeout(() => {
       setIsLoading(false);
-      router.push('/admin'); // Redirect to admin dashboard
-    }, 1000); // Simulate network delay
+      router.push('/admin'); 
+    }, 1000); 
   };
 
-  const handleForgotPassword = () => {
-    alert("Password recovery is not implemented in this demonstration.");
-  };
+  // handleForgotPassword is no longer needed here as it's a link now
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/40 p-4">
@@ -50,13 +45,12 @@ export default function AdminLoginPage() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">Password</Label>
-                <button 
-                  type="button" // Important: type="button" to prevent form submission
-                  onClick={handleForgotPassword} 
-                  className="text-sm text-primary hover:underline focus:outline-none"
-                >
-                  Forgot password?
-                </button>
+                {/* Changed to Link component */}
+                <Button variant="link" asChild className="text-sm text-primary hover:underline focus:outline-none p-0 h-auto">
+                  <Link href="/admin/forgot-password">
+                    Forgot password?
+                  </Link>
+                </Button>
               </div>
               <Input id="password" type="password" required defaultValue="password" />
             </div>
@@ -74,4 +68,3 @@ export default function AdminLoginPage() {
     </div>
   );
 }
-

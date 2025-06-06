@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { COMPANY_NAME } from "@/lib/constants";
-import Link from "next/link";
+// Link component is no longer needed for a simple alert
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation"; // Import useRouter
@@ -30,6 +30,10 @@ export default function AdminLoginPage() {
     }, 1000); // Simulate network delay
   };
 
+  const handleForgotPassword = () => {
+    alert("Password recovery is not implemented in this demonstration.");
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/40 p-4">
       <Card className="w-full max-w-sm shadow-xl">
@@ -46,9 +50,13 @@ export default function AdminLoginPage() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">Password</Label>
-                <Link href="#" className="text-sm text-primary hover:underline">
+                <button 
+                  type="button" // Important: type="button" to prevent form submission
+                  onClick={handleForgotPassword} 
+                  className="text-sm text-primary hover:underline focus:outline-none"
+                >
                   Forgot password?
-                </Link>
+                </button>
               </div>
               <Input id="password" type="password" required defaultValue="password" />
             </div>
@@ -66,3 +74,4 @@ export default function AdminLoginPage() {
     </div>
   );
 }
+

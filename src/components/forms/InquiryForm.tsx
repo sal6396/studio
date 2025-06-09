@@ -22,17 +22,20 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { SERVICES_DATA } from "@/lib/constants";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getServices, submitServiceInquiry } from "@/lib/data";
+import type { Database } from "@/lib/supabase";
+
+type Service = Database['public']['Tables']['services']['Row'];
 
 const inquiryFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   email: z.string().email({ message: "Please enter a valid email address." }),
   phone: z.string().optional(),
-  service: z.string().min(1, { message: "Please select a service." }),
-  projectDetails: z.string().min(10, { message: "Please provide some details about your project (min. 10 characters)." }),
+  service_slug: z.string().min(1, { message: "Please select a service." }),
+  project_details: z.string().min(10, { message: "Please provide some details about your project (min. 10 characters)." }),
 });
 
 type InquiryFormValues = z.infer<typeof inquiryFormSchema>;
@@ -44,6 +47,15 @@ interface InquiryFormProps {
 export function InquiryForm({ defaultServiceSlug }: InquiryFormProps) {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [services, setServices] = useState<Service[]>([]);
+
+  useEffect(() => {
+    async function loadServices() {
+      const servicesData = await getServices();
+      setServices(servicesData);
+    }
+    loadServices();
+  }, []);
 
   const form = useForm<InquiryFormValues>({
     resolver: zodResolver(inquiryFormSchema),
@@ -51,23 +63,38 @@ export function InquiryForm({ defaultServiceSlug }: InquiryFormProps) {
       name: "",
       email: "",
       phone: "",
-      service: defaultServiceSlug || "",
-      projectDetails: "",
+      service_slug: defaultServiceSlug || "",
+      project_details: "",
     },
   });
 
   async function onSubmit(data: InquiryFormValues) {
     setIsSubmitting(true);
-    // Simulate API call
-    console.log("Inquiry submitted:", data);
-    await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate network delay
     
-    toast({
-      title: "Inquiry Sent!",
-      description: "Thank you for your inquiry. We will get back to you shortly.",
-    });
-    form.reset();
-    setIsSubmitting(false);
+    try {
+      await submitServiceInquiry({
+        name: data.name,
+        email: data.email,
+        phone: data.phone || undefined,
+        service_slug: data.service_slug,
+        project_details: data.project_details,
+      });
+      
+      toast({
+        title: "Inquiry Sent!",
+        description: "Thank you for your inquiry. We will get back to you shortly.",
+      });
+      
+      form.reset();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send inquiry. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -121,7 +148,7 @@ export function InquiryForm({ defaultServiceSlug }: InquiryFormProps) {
             />
             <FormField
               control={form.control}
-              name="service"
+              name="service_slug"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Service Interested In</FormLabel>
@@ -132,7 +159,7 @@ export function InquiryForm({ defaultServiceSlug }: InquiryFormProps) {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {SERVICES_DATA.map((service) => (
+                      {services.map((service) => (
                         <SelectItem key={service.slug} value={service.slug}>
                           {service.title}
                         </SelectItem>
@@ -145,7 +172,7 @@ export function InquiryForm({ defaultServiceSlug }: InquiryFormProps) {
             />
             <FormField
               control={form.control}
-              name="projectDetails"
+              name="project_details"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Project Details</FormLabel>
